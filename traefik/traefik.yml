@@ -31,7 +31,7 @@ api:
 # Let’s encrypt configuration
 ################################################################
 certificatesResolvers:
-  mydnschallenge:
+  cloudflare:
     acme:
       email: info@mitra.cloud
       storage: ./letsencrypt/acme.json
