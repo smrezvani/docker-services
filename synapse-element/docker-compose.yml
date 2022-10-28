@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  synapse:
+    image: matrixdotorg/synapse:latest
+    restart: always
+    container_name: synapse
+    environment:
+      - SYNAPSE_LOG_LEVEL=INFO
+    volumes:
+      - "$HOME/data/synapse:/data"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.synapse.rule=Host(`synapse.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.synapse.entrypoints=https"
+      - "traefik.http.routers.synapse.tls=true"
+      - "traefik.http.routers.synapse.tls.certresolver=cloudflare"
+
+      # Watchtower Update
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - proxy
+
+  element:
+    image: vectorim/element-web:latest
+    restart: always
+    container_name: element
+    depends_on:
+      - synapse
+    volumes:
+      - "$HOME/data/element-web/config.json:/app/config.json:ro"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.element.rule=Host(`element.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.element.entrypoints=https"
+      - "traefik.http.routers.element.tls=true"
+      - "traefik.http.routers.element.tls.certresolver=cloudflare"
+
+      # Watchtower Update
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
