@@ -34,7 +34,7 @@ services:
 
       # global redirect to https
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.http-catchall.entrypoints=http"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
 
       # middleware redirect
@@ -43,7 +43,7 @@ services:
 
       # redirect root to www
       - "traefik.http.routers.root.rule=host(`${DOMAIN}.${TLD}`)"
-      - "traefik.http.routers.root.entrypoints=https"
+      - "traefik.http.routers.root.entrypoints=websecure"
       - "traefik.http.routers.root.middlewares=redirect-root-to-www"
       - "traefik.http.routers.root.tls=true"
 
