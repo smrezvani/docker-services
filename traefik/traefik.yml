@@ -1,28 +1,12 @@
-log:
-  level: INFO
-
-################################################################
-# API and dashboard configuration
-################################################################
-api:
-  insecure: false
-  dashboard: true
-
 ################################################################
 # Entrypoints configuration
 ################################################################
 entryPoints:
-  web:
+  http:
     address: ":80"
 
-  websecure:
+  https:
     address: ":443"
-
-################################################################
-# Ping configuration
-################################################################
-ping:
-  entryPoint: traefik
 
 ################################################################
 # Docker configuration backend
@@ -37,15 +21,28 @@ providers:
     watch: true
 
 ################################################################
+# API and dashboard configuration
+################################################################
+api:
+  insecure: false
+  dashboard: true
+
+################################################################
 # Let’s encrypt configuration
 ################################################################
 certificatesResolvers:
-  letsencryptresolver:
+  mydnschallenge:
     acme:
       email: info@mitra.cloud
       storage: ./letsencrypt/acme.json
       dnsChallenge:
         provider: cloudflare
+
+################################################################
+# Ping configuration
+################################################################
+ping:
+  entryPoint: traefik
 
 ################################################################
 # Retry sending request if network error
@@ -58,3 +55,6 @@ retry:
 ################################################################
 metrics:
   prometheus: {}
+
+log:
+  level: INFO
