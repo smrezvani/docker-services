@@ -1,7 +1,7 @@
 {
     "default_server_config": {
         "m.homeserver": {
-            "base_url": "https://matrix.mitra.cloud",
+            "base_url": "https://synapse.mitra.cloud",
             "server_name": "mitra.cloud"
         },
         "m.identity_server": {
