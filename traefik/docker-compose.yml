@@ -3,7 +3,7 @@ version: "3"
 services:
   traefik:
     image: "traefik:latest"
-    hostname: monitor.mrezvani.com
+    hostname: ${DOMAIN}.${TLD}
     container_name: "traefik"
     restart: always
     depends_on:
