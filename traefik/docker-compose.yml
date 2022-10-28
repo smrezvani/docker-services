@@ -34,7 +34,7 @@ services:
       - "traefik.enable=true"
 
       # DNS challenge
-      - "traefik.http.routers.http-catchall.tls.certresolver:letsencryptresolver"
+      - "traefik.http.routers.http-catchall.certresolver:letsencryptresolver"
 
       # global redirect to https
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
