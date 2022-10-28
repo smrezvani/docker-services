@@ -6,7 +6,7 @@ services:
     container_name: "code-server"
     restart: always
     volumes:
-      - "./config:/config"
+      - "${USER_HOME}/data/code-server/config:/config"
     networks:
       - proxy
     environment:
