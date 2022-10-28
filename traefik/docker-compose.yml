@@ -45,8 +45,8 @@ services:
       # redirect root to www
       - "traefik.http.routers.root.rule=host(`${DOMAIN}.${TLD}`)"
       - "traefik.http.routers.root.entrypoints=websecure"
-      - "traefik.http.routers.root.tls=true"
-      - "traefik.http.routers.root.tls.certificatesresolvers:letsencryptresolver"
+      - "traefik.http.routers.root.dns=true"
+      - "traefik.http.routers.root.dns.certificatesresolvers:letsencryptresolver"
       # - "traefik.http.routers.root.middlewares=redirect-root-to-www"
 
       # middleware redirect root to www
