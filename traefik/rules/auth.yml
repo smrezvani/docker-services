@@ -1,0 +1,7 @@
+http:
+  middlewares:
+    admin-auth:
+      basicAuth:
+        removeHeader: true
+        users:
+          - "admin:$apr1$pvW7uFsi$gzM2pSd7IegELPH3YuPcU1"
