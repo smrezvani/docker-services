@@ -18,6 +18,7 @@ services:
 
       # Watchtower Update
       - "com.centurylinklabs.watchtower.enable=true"
+      
 networks:
   proxy:
     external: true
