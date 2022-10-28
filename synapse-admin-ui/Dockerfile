@@ -24,7 +24,7 @@ RUN rm -rf /usr/share/nginx/html \
  && ln -s /app /usr/share/nginx/html
 
 # Copy healthcheck script
-COPY healthcheck.sh /usr/local/bin/healthcheck.sh
+# COPY healthcheck.sh /usr/local/bin/healthcheck.sh
 
 # Health check
-HEALTHCHECK --interval=10s --start-period=10s CMD bash /usr/local/bin/healthcheck.sh
+# HEALTHCHECK --interval=10s --start-period=10s CMD bash /usr/local/bin/healthcheck.sh
