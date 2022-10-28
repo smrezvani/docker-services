@@ -7,17 +7,16 @@ services:
     restart: always
     volumes:
       - "./config:/config"
-      - "./secrets:/secrets:ro"
     networks:
       - proxy
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
-      # - FILE__PASSWORD=/secrets/password
-      - FILE__HASHED_PASSWORD=/secrets/password
-      # - FILE__SUDO_PASSWORD=/secrets/password
-      - FILE__SUDO_PASSWORD_HASH=/secrets/password
+      # - PASSWORD=${PASSWORD}
+      - HASHED_PASSWORD="`${HASHED_PASSWORD}`"
+      # - SUDO_PASSWORD=${SUDO_PASSWORD}
+      - SUDO_PASSWORD_HASH="`${SUDO_PASSWORD_HASH}`"
       - PROXY_DOMAIN=`code.${TRAEFIK_DOMAIN}`
       - DEFAULT_WORKSPACE=/config/workspace
     labels:
