@@ -3,6 +3,7 @@ version: "3"
 services:
   traefik:
     image: "traefik:latest"
+    hostname: monitor.mrezvani.com
     container_name: "traefik"
     restart: always
     depends_on:
@@ -31,6 +32,9 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
+
+      # DNS challenge
+      - "traefik.http.routers.http-catchall.tls.certresolver:letsencryptresolver"
 
       # global redirect to https
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
