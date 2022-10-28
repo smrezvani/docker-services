@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: "code-server"
+    restart: always
+    volumes:
+      - "./config:/config"
+    networks:
+      - proxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Istanbul
+      - PASSWORD=
+      - HASHED_PASSWORD=
+      - SUDO_PASSWORD=
+      - SUDO_PASSWORD_HASH=
+      - PROXY_DOMAIN=`code.${TRAEFIK_DOMAIN}`
+      - DEFAULT_WORKSPACE=/config/workspace
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.codeserver.rule=Host(`code.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.codeserver.entrypoints=https"
+      - "traefik.http.routers.codeserver.tls=true"
+      - "traefik.http.routers.codeserver.tls.certresolver=cloudflare"
+
+      # Watchtower Update
+      - "com.centurylinklabs.watchtower.enable=true"
+networks:
+  proxy:
+    external: true
