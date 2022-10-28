@@ -29,7 +29,7 @@ services:
     depends_on:
       - synapse
     volumes:
-      - "$HOME/data/element-web/config.json:/app/config.json:ro"
+      - "./element-web/config.json:/app/config.json:ro"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.element.rule=Host(`element.${TRAEFIK_DOMAIN}`)"
