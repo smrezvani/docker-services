@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  mailhog:
+    image: "mailhog:latest"
+    container_name: "mailhog"
+    restart: always
+    volumes:
+      - "$HOME/data/mailhog:/home/mailhog"
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailhog.rule=Host(`mailhog.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.mailhog.entrypoints=https"
+      - "traefik.http.routers.mailhog.tls=true"
+      - "traefik.http.routers.mailhog.tls.certresolver=cloudflare"
+
+      # Watchtower Update
+      - "com.centurylinklabs.watchtower.enable=true"
+networks:
+  proxy:
+    external: true
