@@ -26,12 +26,12 @@ services:
       - "traefik.enable=true"
 
       # Traefik dashboard
-      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}.${TLD}`)"
-      - "traefik.http.routers.traefik.entrypoints=https"
-      - "traefik.http.routers.traefik.middlewares:admin-auth@file"
-      - "traefik.http.routers.traefik.tls=true"
-      - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN}.${TLD}`)"
+      - "traefik.http.routers.api.entrypoints=https"
+      - "traefik.http.routers.api.middlewares:admin-auth@file"
+      - "traefik.http.routers.api.tls=true"
+      - "traefik.http.routers.api.tls.certresolver=cloudflare"
+      - "traefik.http.routers.api.service=api@internal"
 
       # global redirect to https
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"

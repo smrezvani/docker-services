@@ -41,8 +41,8 @@ certificatesResolvers:
 ################################################################
 # Ping configuration
 ################################################################
-ping:
-  entryPoint: traefik
+# ping:
+#   entryPoint: traefik
 
 ################################################################
 # Retry sending request if network error
@@ -53,8 +53,8 @@ retry:
 ################################################################
 # Enable prometheus metrics
 ################################################################
-metrics:
-  prometheus: {}
+# metrics:
+#   prometheus: {}
 
 log:
   level: INFO
