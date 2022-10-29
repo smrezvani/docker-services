@@ -8,6 +8,7 @@ services:
     volumes:
       - "$HOME/data/x-ui/db/:/etc/x-ui/"
       - "$HOME/data/x-ui/cert/:/root/cert/"
+    entrypoint: ./x-ui
     networks:
       - proxy
     labels:
