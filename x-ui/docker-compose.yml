@@ -1,15 +1,16 @@
-version: '3.3'
+version: "3"
+
 services:
   x-ui:
-    networks:
-      - proxy
+    image: x-ui:latest
+    container_name: "x-ui"
+    restart: always
     volumes:
       - "$HOME/data/x-ui/db/:/etc/x-ui/"
       - "$HOME/data/x-ui/cert/:/root/cert/"
-    container_name: x-ui
-    restart: unless-stopped
-    image: 'enwaiax/x-ui:latest'
-
+    entrypoint: ./x-ui
+    networks:
+      - proxy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.xui.rule=Host(`shadow.${TRAEFIK_DOMAIN}`)"
