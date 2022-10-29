@@ -8,9 +8,9 @@ services:
     volumes:
       - "$HOME/data/x-ui/db/:/etc/x-ui/"
       - "$HOME/data/x-ui/cert/:/root/cert/"
-    network_mode: host
     networks:
       - proxy
+      - host
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.xui.rule=Host(`shadow.${TRAEFIK_DOMAIN}`)"
@@ -22,4 +22,7 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
 networks:
   proxy:
+    external: true
+  host:
+    driver: host
     external: true
