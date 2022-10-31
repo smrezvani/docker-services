@@ -1,7 +1,7 @@
-version: "3.6"
+version: "3.7"
 services:
   web:
-    image: "gitlab/gitlab-ee:latest"
+    image: "gitlab/gitlab-ce:latest"
     restart: always
     hostname: "gitlab.${TRAEFIK_DOMAIN}"
     environment:
@@ -23,3 +23,21 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
 
     shm_size: "256m"
+
+    networks:
+      - proxy
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    container_name: gitlab-runner
+    restart: always
+    depends_on:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "$HOME/data/gitlab/gitlab-runner:/etc/gitlab-runner"
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
