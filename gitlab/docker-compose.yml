@@ -3,7 +3,7 @@ services:
   web:
     image: "gitlab/gitlab-ee:latest"
     restart: always
-    hostname: `gitlab.${TRAEFIK_DOMAIN}`
+    hostname: "gitlab.${TRAEFIK_DOMAIN}"
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url `https://gitlab.${TRAEFIK_DOMAIN}`
