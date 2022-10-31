@@ -3,12 +3,10 @@ services:
   web:
     image: "gitlab/gitlab-ce:latest"
     restart: always
-    # hostname: "gitlab.${TRAEFIK_DOMAIN}"
+    hostname: "gitlab.${TRAEFIK_DOMAIN}"
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url https://gitlab.${TRAEFIK_DOMAIN}
-        # nginx['listen_https'] = false
-        # nginx['listen_port'] = 80
+        external_url "https://gitlab.${TRAEFIK_DOMAIN}"
         # Add any other gitlab.rb configuration here, each on its own line
     volumes:
       - "$HOME/data/gitlab/config:/etc/gitlab"
