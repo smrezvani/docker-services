@@ -2,34 +2,42 @@ version: "3.7"
 services:
   web:
     image: "gitlab/gitlab-ce:latest"
-    restart: always
+    restart: unless-stopped
     hostname: "gitlab.${TRAEFIK_DOMAIN}"
+    ports:
+      - "2222:22"
+    networks:
+      - proxy
     environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url "https://gitlab.${TRAEFIK_DOMAIN}"
-        # Add any other gitlab.rb configuration here, each on its own line
-
-        nginx['listen_https'] = false
-        nginx['listen_port'] = 80
+      - GITLAB_SHELL_SSH_PORT=2222
     volumes:
-      - "$HOME/data/gitlab/config:/etc/gitlab"
-      - "$HOME/data/gitlab/logs:/var/log/gitlab"
-      - "$HOME/data/gitlab/data:/var/opt/gitlab"
+      - "$HOME/data/gitlab/config:/etc/gitlab:Z"
+      - "$HOME/data/gitlab/logs:/var/log/gitlab:Z"
+      - "$HOME/data/gitlab/data:/var/opt/gitlab:Z"
+      - "/etc/localtime:/etc/localtime:ro"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.rule=Host(`gitlab.${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.gitlab.entrypoints=https"
       - "traefik.http.routers.gitlab.tls=true"
       - "traefik.http.routers.gitlab.tls.certresolver=cloudflare"
+      - "traefik.http.routers.gitlab.middlewares=gitlab-headers"
+      - "traefik.http.routers.gitlab.service=gitlab"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
 
-      # Watchtower Update
-      - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.http.middlewares.gitlab-headers.headers.customrequestheaders.X_FORWARDED_PROTO=https"
+      - "traefik.http.middlewares.gitlab-headers.headers.customrequestheaders.X_Forwarded-Ssl=on"
+      - "traefik.http.middlewares.gitlab-headers.headers.customresponseheaders.X_FORWARDED_PROTO=https"
+      - "traefik.http.middlewares.gitlab-headers.headers.customresponseheaders.X_Forwarded-Ssl=on"
 
-    shm_size: "256m"
-
-    networks:
-      - proxy
-
+      - "traefik.http.routers.gitlab-registry.rule=Host(`registry.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.gitlab-registry.entrypoints=https"
+      - "traefik.http.routers.gitlab-registry.tls=true"
+      - "traefik.http.routers.gitlab-registry.tls.certresolver=cloudflare"
+      - "traefik.http.routers.gitlab-registry.service=gitlab-registry"
+      - "traefik.http.services.gitlab-registry.loadbalancer.server.port=8500"
+    cap_add:
+      - SYS_ADMIN
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
     container_name: gitlab-runner
