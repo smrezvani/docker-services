@@ -1,9 +1,10 @@
-version: '3'
+version: "3"
 
 services:
   mailhog:
     image: "mailhog/mailhog"
     container_name: "mailhog"
+    hostname: "mailhog"
     restart: always
     volumes:
       - "$HOME/data/mailhog:/home/mailhog"
