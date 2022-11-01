@@ -4,8 +4,8 @@ services:
     image: "gitlab/gitlab-ce:latest"
     restart: unless-stopped
     hostname: "gitlab.${TRAEFIK_DOMAIN}"
-    ports:
-      - "2222:22"
+    # ports:
+    #   - "2222:22"
     networks:
       - proxy
     environment:
