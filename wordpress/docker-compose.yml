@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: mariadb
+    image: mariadb:latest
     container_name: wordpress-mysql
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -22,7 +22,7 @@ services:
 
   wordpress:
     image: wordpress:latest
-    container_name: wordpress
+    container_name: wordpress:latest
     restart: unless-stopped
     volumes:
       - ./data:/var/www/html
