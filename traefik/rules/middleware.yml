@@ -1,0 +1,6 @@
+http:
+  middlewares:
+    admin-auth:
+      basicAuth:
+        users:
+          - "admin:$apr1$8aWcTGJu$qqmMuv1EOYLvtKLSk7uBB."
