@@ -17,4 +17,9 @@ services:
       - WATCHTOWER_NOTIFICATION_GOTIFY_URL=${GOTIFY_URL}
       - WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN=${GOTIFY_TOKEN}
     labels:
+      # Enable Autohehaling and Metrics
+      - "autoheal.enable=true"
+      - "autoheal.stop.timeout=10"
+      - "metrics.enable=true"
+
       - "com.centurylinklabs.watchtower.enable=true"
