@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  traefik:
+  web:
     image: "traefik:latest"
     hostname: "traefik.${DOMAIN}"
     restart: always
