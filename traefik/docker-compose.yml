@@ -44,11 +44,6 @@ services:
       - "traefik.http.routers.base-traefik-exporter.tls.certresolver=cloudflare"
       - "traefik.http.routers.base-traefik-exporter.service=prometheus@internal"
 
-      # global redirect to https
-      - "traefik.http.routers.base-traefik.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.base-traefik.entrypoints=http"
-      - "traefik.http.routers.base-traefik.middlewares=redirect-to-https"
-
       # middleware redirect
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
