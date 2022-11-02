@@ -37,7 +37,7 @@ services:
       - "autoheal.stop.timeout=10"
       - "metrics.enable=true"
       - "traefik.enable=true"
-      - "traefik.http.routers.wordpress.rule=Host(`wordpress.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.wordpress.rule=Host(`${DOMAIN_PREFIX}.${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.wordpress.entrypoints=https"
       - "traefik.http.routers.wordpress.tls=true"
       - "traefik.http.routers.wordpress.tls.certresolver=cloudflare"
