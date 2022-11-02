@@ -12,6 +12,10 @@ services:
     networks:
       - proxy
     labels:
+      # Enable Autohehaling, Metrics and Traefik
+      - "autoheal.enable=true"
+      - "autoheal.stop.timeout=10"
+      - "metrics.enable=true"
       - "traefik.enable=true"
       - "traefik.http.routers.gotify.rule=Host(`gotify.${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.gotify.entrypoints=https"
