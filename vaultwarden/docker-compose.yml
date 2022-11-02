@@ -16,8 +16,12 @@ services:
     networks:
       - proxy
     labels:
+      # Enable Autohehaling, Metrics and Traefik
+      - "autoheal.enable=true"
+      - "autoheal.stop.timeout=10"
+      - "metrics.enable=true"
       - "traefik.enable=true"
-      - "traefik.http.routers.vaultwarden.rule=Host(`vaultwarden.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.vaultwarden.rule=Host(`vault.${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.vaultwarden.entrypoints=https"
       - "traefik.http.routers.vaultwarden.tls=true"
       - "traefik.http.routers.vaultwarden.tls.certresolver=cloudflare"
