@@ -37,14 +37,11 @@ services:
       - "autoheal.stop.timeout=10"
       - "metrics.enable=true"
       - "traefik.enable=true"
-
-      # Traefik dashboard
+      - "traefik.http.routers.wordpress.rule=Host(`vault.${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.wordpress.entrypoints=https"
-      - "traefik.http.routers.wordpress.middlewares=admin-auth@file"
-      - "traefik.http.routers.wordpress.rule=Host(`${TRAEFIK_WORDPRESS}`)"
       - "traefik.http.routers.wordpress.tls=true"
       - "traefik.http.routers.wordpress.tls.certresolver=cloudflare"
-      - "traefik.http.routers.wordpress.service=api@internal"
+      - "traefik.http.routers.wordpress.middlewares=admin-auth@file"
 
       # Watchtower Update
       - "com.centurylinklabs.watchtower.enable=true"
